@@ -3,7 +3,7 @@ var router = express.Router();
 var _ = require('lodash');
 const axios = require('axios');
 
-let movies = []
+let movies = [];
 
 /*GET all movies*/
 router.get('/', (req, res) =>{
@@ -15,10 +15,16 @@ router.get('/', (req, res) =>{
 router.get('/:id', (req, res)=>{
     const {id} = req.params;
     const movie = _.find(movies, ["id", id]);
-    res.json({
-        message: 'Movie found',
-        movie
-    });
+    if(movie !== undefined) {
+        res.json({
+            message: 'Movie found',
+            ...movie
+        });
+    } else {
+        res.json({
+            message: 'Movie not found'
+        });
+    }
 });
 // récupère un film présent dans la base de données locale en précisant l'ID du film que l'on souhaite récupérer
 
